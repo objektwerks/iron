@@ -7,6 +7,7 @@ libraryDependencies ++= {
   Seq(
     "io.github.iltotore" %% "iron" % ironVersion,
     "io.github.iltotore" %% "iron-jsoniter" % ironVersion,
+    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % "2.23.3",
     "org.scalatest" %% "scalatest" % "3.2.16" % Test
   )
 }
