@@ -2,8 +2,10 @@ package objektwerks
 
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
-import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
+import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, LessEqual}
 import io.github.iltotore.iron.constraint.string.ValidUUID
+
+type Between[Min, Max] = GreaterEqual[Min] & LessEqual[Max]
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
