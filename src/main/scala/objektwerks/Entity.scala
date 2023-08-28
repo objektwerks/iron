@@ -49,3 +49,10 @@ final case class Measurement(id: Long :| GreaterEqual[0],
                              salt: Int,
                              temperature: Int,
                              measured: Long :| GreaterEqual[1]) extends Entity
+
+final case class Chemical(id: Long :| GreaterEqual[0],
+                          poolId: Long,
+                          typeof: TypeOfChemical,
+                          amount: Double, 
+                          unit: UnitOfMeasure,
+                          added: Long :| GreaterEqual[1]) extends Entity
