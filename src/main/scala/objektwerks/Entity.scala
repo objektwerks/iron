@@ -20,6 +20,13 @@ enum TypeOfChemical(val display: String):
 sealed trait Entity:
   val id: Long :| GreaterEqual[0]
 
+final case class Account(id: Long :| GreaterEqual[0],
+                         license: String :| Length[36],
+                         emailAddress: String,
+                         pin: String,
+                         activated: Long :| GreaterEqual[0],
+                         deactivated: Long :| GreaterEqual[0]) extends Entity
+
 final case class Pool(id: Long :| GreaterEqual[0],
                       license: String :| Length[36],
                       name: String :| MinLength[3], 
