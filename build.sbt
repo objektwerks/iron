@@ -4,11 +4,12 @@ scalaVersion := "3.3.1-RC6"
 organization := "objektwerks"
 libraryDependencies ++= {
   val ironVersion = "2.2.1"
+  val jsoniterVersion = "2.23.3"
   Seq(
     "io.github.iltotore" %% "iron" % ironVersion,
     "io.github.iltotore" %% "iron-jsoniter" % ironVersion,
-    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % "2.23.3",
-    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % "2.23.3" % "provided",
+    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % jsoniterVersion,
+    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % "provided",
     "org.scalatest" %% "scalatest" % "3.2.16" % Test
   )
 }
