@@ -28,7 +28,8 @@ final case class Account(id: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
 final case class Pool(id: Long :| GreaterEqual[0],
-                      license: String :| Length[36],
+                      accountId: Long :| GreaterEqual[1],
+                      built: Long :| GreaterEqual[1],
                       name: String :| MinLength[3], 
                       volume: Int :| Greater[100],
                       unit: UnitOfMeasure) extends Entity
