@@ -37,7 +37,7 @@ final case class Cleaning(id: Long :| GreaterEqual[0],
                           cleaned: Long :| GreaterEqual[1]) extends Entity
 
 final case class Measurement(id: Long :| GreaterEqual[0],
-                             poolId: Long,
+                             poolId: Long :| GreaterEqual[1],
                              totalChlorine: Int,
                              freeChlorine: Int,
                              combinedChlorine: Double,
