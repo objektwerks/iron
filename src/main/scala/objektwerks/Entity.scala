@@ -57,8 +57,8 @@ final case class Measurement(id: Long :| GreaterEqual[0],
                              totalAlkalinity: Int :| Between[80, 120],
                              cyanuricAcid: Int :| Between[30, 100],
                              totalBromine: Int :| Between[2, 10],
-                             salt: Int,
-                             temperature: Int,
+                             salt: Int :| Between[2700, 3400],
+                             temperature: Int :| Between[50, 100],
                              measured: Long :| GreaterEqual[1]) extends Entity
 
 object Measurement:
