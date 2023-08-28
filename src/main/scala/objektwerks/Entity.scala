@@ -5,7 +5,7 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.jsoniter.given
-import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
+import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
 import io.github.iltotore.iron.constraint.numeric.Interval.Closed
 import io.github.iltotore.iron.constraint.string.ValidUUID
@@ -23,8 +23,8 @@ object Entity:
 
 final case class Account(id: Long :| GreaterEqual[0],
                          license: String :| ValidUUID,
-                         emailAddress: String,
-                         pin: String :| Length[7],
+                         emailAddress: String :| MinLength[3],
+                         pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
