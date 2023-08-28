@@ -25,3 +25,13 @@ final case class Pool(id: Long :| GreaterEqual[0],
                       name: String :| MinLength[3], 
                       volume: Int :| Greater[100],
                       unit: UnitOfMeasure) extends Entity
+
+final case class Cleaning(id: Long :| GreaterEqual[0],
+                          poolId: Long :| GreaterEqual[1],
+                          brush: Boolean,
+                          net: Boolean,
+                          skimmerBasket: Boolean,
+                          pumpBasket: Boolean,
+                          pumpFilter: Boolean,
+                          vacuum: Boolean,
+                          cleaned: Long :| GreaterEqual[1]) extends Entity
