@@ -1,7 +1,7 @@
 package objektwerks
 
 import io.github.iltotore.iron.*
-import io.github.iltotore.iron.constraint.collection.MinLength
+import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
@@ -24,7 +24,7 @@ sealed trait Entity:
 final case class Account(id: Long :| GreaterEqual[0],
                          license: String :| ValidUUID,
                          emailAddress: String,
-                         pin: String,
+                         pin: String :| Length[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
