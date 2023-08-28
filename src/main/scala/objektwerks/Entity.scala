@@ -1,6 +1,10 @@
 package objektwerks
 
+import com.github.plokhotnyuk.jsoniter_scala.core.*
+import com.github.plokhotnyuk.jsoniter_scala.macros.*
+
 import io.github.iltotore.iron.*
+import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
 import io.github.iltotore.iron.constraint.numeric.Interval.Closed
@@ -8,6 +12,14 @@ import io.github.iltotore.iron.constraint.string.ValidUUID
 
 sealed trait Entity:
   val id: Long :| GreaterEqual[0]
+
+object Entity:
+  given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]( CodecMakerConfig.withDiscriminatorFieldName(None) )
 
 final case class Account(id: Long :| GreaterEqual[0],
                          license: String :| ValidUUID,
