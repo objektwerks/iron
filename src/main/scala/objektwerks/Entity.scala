@@ -35,3 +35,17 @@ final case class Cleaning(id: Long :| GreaterEqual[0],
                           pumpFilter: Boolean,
                           vacuum: Boolean,
                           cleaned: Long :| GreaterEqual[1]) extends Entity
+
+final case class Measurement(id: Long :| GreaterEqual[0],
+                             poolId: Long,
+                             totalChlorine: Int,
+                             freeChlorine: Int,
+                             combinedChlorine: Double,
+                             ph: Double,
+                             calciumHardness: Int,
+                             totalAlkalinity: Int,
+                             cyanuricAcid: Int,
+                             totalBromine: Int,
+                             salt: Int,
+                             temperature: Int,
+                             measured: Long :| GreaterEqual[1]) extends Entity
