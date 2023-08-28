@@ -1,8 +1,9 @@
 package objektwerks
 
 import io.github.iltotore.iron.*
-import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
+import io.github.iltotore.iron.constraint.collection.MinLength
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
+import io.github.iltotore.iron.constraint.string.ValidUUID
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
@@ -21,7 +22,7 @@ sealed trait Entity:
   val id: Long :| GreaterEqual[0]
 
 final case class Account(id: Long :| GreaterEqual[0],
-                         license: String :| Length[36],
+                         license: String :| ValidUUID,
                          emailAddress: String,
                          pin: String,
                          activated: Long :| GreaterEqual[0],
