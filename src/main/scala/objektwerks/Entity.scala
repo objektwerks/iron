@@ -1,7 +1,7 @@
 package objektwerks
 
 import io.github.iltotore.iron.*
-import io.github.iltotore.iron.constraint.numeric.Greater
+import io.github.iltotore.iron.constraint.numeric.GreaterEqual
 
 sealed trait Entity:
-  val id: Long :| Greater[-1] DescribedAs "Must be 0 or greater."
+  val id: Long :| GreaterEqual[0]
