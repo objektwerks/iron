@@ -2,10 +2,9 @@ package objektwerks
 
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.constraint.collection.{Length, MinLength}
-import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, LessEqual}
+import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
+import io.github.iltotore.iron.constraint.numeric.Interval.Closed
 import io.github.iltotore.iron.constraint.string.ValidUUID
-
-type Between[Min, Max] = GreaterEqual[Min] & LessEqual[Max]
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
@@ -49,16 +48,16 @@ final case class Cleaning(id: Long :| GreaterEqual[0],
 
 final case class Measurement(id: Long :| GreaterEqual[0],
                              poolId: Long :| GreaterEqual[1],
-                             totalChlorine: Int :| Between[1, 5],
-                             freeChlorine: Int :| Between[1, 5],
-                             combinedChlorine: Double :| Between[0.0, 0.5],
-                             ph: Double :| Between[6.2, 8.4],
-                             calciumHardness: Int :| Between[250, 500],
-                             totalAlkalinity: Int :| Between[80, 120],
-                             cyanuricAcid: Int :| Between[30, 100],
-                             totalBromine: Int :| Between[2, 10],
-                             salt: Int :| Between[2700, 3400],
-                             temperature: Int :| Between[50, 100],
+                             totalChlorine: Int :| Closed[1, 5],
+                             freeChlorine: Int :| Closed[1, 5],
+                             combinedChlorine: Double :| Closed[0.0, 0.5],
+                             ph: Double :| Closed[6.2, 8.4],
+                             calciumHardness: Int :| Closed[250, 500],
+                             totalAlkalinity: Int :| Closed[80, 120],
+                             cyanuricAcid: Int :| Closed[30, 100],
+                             totalBromine: Int :| Closed[2, 10],
+                             salt: Int :| Closed[2700, 3400],
+                             temperature: Int :| Closed[50, 100],
                              measured: Long :| GreaterEqual[1]) extends Entity
 
 final case class Chemical(id: Long :| GreaterEqual[0],
