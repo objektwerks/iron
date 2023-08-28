@@ -51,7 +51,7 @@ final case class Measurement(id: Long :| GreaterEqual[0],
                              measured: Long :| GreaterEqual[1]) extends Entity
 
 final case class Chemical(id: Long :| GreaterEqual[0],
-                          poolId: Long,
+                          poolId: Long :| GreaterEqual[1],
                           typeof: TypeOfChemical,
                           amount: Double, 
                           unit: UnitOfMeasure,
