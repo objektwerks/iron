@@ -32,7 +32,7 @@ final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| GreaterEqual[1],
                       name: String :| MinLength[3], 
                       built: Long :| GreaterEqual[1],
-                      volume: Int :| Greater[100],
+                      volume: Int :| GreaterEqual[100],
                       unit: UnitOfMeasure) extends Entity
 
 final case class Cleaning(id: Long :| GreaterEqual[0],
