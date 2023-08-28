@@ -1,6 +1,6 @@
 name := "iron"
 version := "0.1-SNAPSHOT"
-scalaVersion := "3.3.1-RC6"
+scalaVersion := "3.3.1-RC4"
 organization := "objektwerks"
 libraryDependencies ++= {
   val ironVersion = "2.2.1"
