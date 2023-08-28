@@ -5,6 +5,7 @@ organization := "objektwerks"
 libraryDependencies ++= {
   Seq(
     "io.github.iltotore" %% "iron" % "2.2.1",
+    "io.github.iltotore" %% "iron-jsoniter" % "2.2.1",
     "org.scalatest" %% "scalatest" % "3.2.16" % Test
   )
 }
