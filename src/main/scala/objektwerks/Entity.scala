@@ -6,19 +6,6 @@ import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
 import io.github.iltotore.iron.constraint.numeric.Interval.Closed
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
-enum UnitOfMeasure:
-  case gl, l, lb, kg, tablet
-
-enum TypeOfChemical(val display: String):
-  case LiquidChlorine extends TypeOfChemical("Liquid Chlorine")
-  case Trichlor extends TypeOfChemical("Trichlor")
-  case Dichlor extends TypeOfChemical("Dichlor")
-  case CalciumHypochlorite extends TypeOfChemical("Calcium Hypochlorite")
-  case Stabilizer extends TypeOfChemical("Stabilizer")
-  case Algaecide extends TypeOfChemical("Algaecide")
-  case MuriaticAcid extends TypeOfChemical("Muriatic Acid")
-  case Salt extends TypeOfChemical("Salt")
-
 sealed trait Entity:
   val id: Long :| GreaterEqual[0]
 
@@ -66,3 +53,16 @@ final case class Chemical(id: Long :| GreaterEqual[0],
                           amount: Double :| Greater[0.0],
                           unit: UnitOfMeasure,
                           added: Long :| GreaterEqual[1]) extends Entity
+
+enum UnitOfMeasure:
+  case gl, l, lb, kg, tablet
+
+enum TypeOfChemical(val display: String):
+  case LiquidChlorine extends TypeOfChemical("Liquid Chlorine")
+  case Trichlor extends TypeOfChemical("Trichlor")
+  case Dichlor extends TypeOfChemical("Dichlor")
+  case CalciumHypochlorite extends TypeOfChemical("Calcium Hypochlorite")
+  case Stabilizer extends TypeOfChemical("Stabilizer")
+  case Algaecide extends TypeOfChemical("Algaecide")
+  case MuriaticAcid extends TypeOfChemical("Muriatic Acid")
+  case Salt extends TypeOfChemical("Salt")
