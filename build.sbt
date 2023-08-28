@@ -8,6 +8,7 @@ libraryDependencies ++= {
     "io.github.iltotore" %% "iron" % ironVersion,
     "io.github.iltotore" %% "iron-jsoniter" % ironVersion,
     "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % "2.23.3",
+    "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % "2.23.3" % "provided",
     "org.scalatest" %% "scalatest" % "3.2.16" % Test
   )
 }
