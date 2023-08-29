@@ -31,7 +31,7 @@ final case class Account(id: Long :| Greater[0],
 final case class Pool(id: Long :| Greater[0],
                       accountId: Long :| Greater[0],
                       name: String :| MinLength[3], 
-                      built: Long :| GreaterEqual[1],
+                      built: Long :| Greater[0],
                       volume: Int :| GreaterEqual[100],
                       unit: UnitOfMeasure) extends Entity
 
