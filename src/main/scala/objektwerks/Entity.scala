@@ -35,7 +35,7 @@ final case class Pool(id: Long :| GreaterEqual[1],
                       volume: Int :| GreaterEqual[100],
                       unit: UnitOfMeasure) extends Entity
 
-final case class Cleaning(id: Long :| GreaterEqual[0],
+final case class Cleaning(id: Long :| GreaterEqual[1],
                           poolId: Long :| GreaterEqual[1],
                           brush: Boolean,
                           net: Boolean,
