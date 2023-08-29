@@ -29,7 +29,7 @@ final case class Account(id: Long :| Greater[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
 final case class Pool(id: Long :| Greater[0],
-                      accountId: Long :| GreaterEqual[1],
+                      accountId: Long :| Greater[0],
                       name: String :| MinLength[3], 
                       built: Long :| GreaterEqual[1],
                       volume: Int :| GreaterEqual[100],
