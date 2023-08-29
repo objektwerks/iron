@@ -43,7 +43,7 @@ final case class Cleaning(id: Long :| Greater[0],
                           pumpBasket: Boolean,
                           pumpFilter: Boolean,
                           vacuum: Boolean,
-                          cleaned: Long :| GreaterEqual[1]) extends Entity
+                          cleaned: Long :| Greater[0]) extends Entity
 
 final case class Measurement(id: Long :| Greater[0],
                              poolId: Long :| Greater[0],
