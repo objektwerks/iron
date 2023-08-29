@@ -57,7 +57,7 @@ final case class Measurement(id: Long :| Greater[0],
                              totalBromine: Int :| Closed[2, 10],
                              salt: Int :| Closed[2700, 3400],
                              temperature: Int :| Closed[50, 100],
-                             measured: Long :| GreaterEqual[1]) extends Entity
+                             measured: Long :| Greater[0]) extends Entity
 
 final case class Chemical(id: Long :| Greater[0],
                           poolId: Long :| Greater[0],
