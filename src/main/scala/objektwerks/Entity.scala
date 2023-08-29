@@ -21,7 +21,7 @@ object Entity:
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]( CodecMakerConfig.withDiscriminatorFieldName(None) )
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]( CodecMakerConfig.withDiscriminatorFieldName(None) )
 
-final case class Account(id: Long :| GreaterEqual[0],
+final case class Account(id: Long :| GreaterEqual[1],
                          license: String :| ValidUUID,
                          emailAddress: String :| MinLength[3],
                          pin: String :| FixedLength[7],
