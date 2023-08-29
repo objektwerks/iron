@@ -11,7 +11,7 @@ import io.github.iltotore.iron.constraint.numeric.Interval.Closed
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
 sealed trait Entity:
-  val id: Long :| Greater[0]
+  val id: Long
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]( CodecMakerConfig.withDiscriminatorFieldName(None) )
