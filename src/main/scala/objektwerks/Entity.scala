@@ -59,7 +59,7 @@ final case class Measurement(id: Long :| GreaterEqual[1],
                              temperature: Int :| Closed[50, 100],
                              measured: Long :| GreaterEqual[1]) extends Entity
 
-final case class Chemical(id: Long :| GreaterEqual[0],
+final case class Chemical(id: Long :| GreaterEqual[1],
                           poolId: Long :| GreaterEqual[1],
                           typeof: TypeOfChemical,
                           amount: Double :| Greater[0.0],
