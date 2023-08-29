@@ -64,7 +64,7 @@ final case class Chemical(id: Long :| Greater[0],
                           typeof: TypeOfChemical,
                           amount: Double :| Greater[0.0],
                           unit: UnitOfMeasure,
-                          added: Long :| GreaterEqual[1]) extends Entity
+                          added: Long :| Greater[0]) extends Entity
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
