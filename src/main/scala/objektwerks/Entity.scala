@@ -6,8 +6,7 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
-import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual}
-import io.github.iltotore.iron.constraint.numeric.Interval.Closed
+import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
 sealed trait Entity:
@@ -47,16 +46,16 @@ final case class Cleaning(id: Long :| Greater[0],
 
 final case class Measurement(id: Long :| Greater[0],
                              poolId: Long :| Greater[0],
-                             totalChlorine: Int :| Closed[1, 5],
-                             freeChlorine: Int :| Closed[1, 5],
-                             combinedChlorine: Double :| Closed[0.0, 0.5],
-                             ph: Double :| Closed[6.2, 8.4],
-                             calciumHardness: Int :| Closed[250, 500],
-                             totalAlkalinity: Int :| Closed[80, 120],
-                             cyanuricAcid: Int :| Closed[30, 100],
-                             totalBromine: Int :| Closed[2, 10],
-                             salt: Int :| Closed[2700, 3400],
-                             temperature: Int :| Closed[50, 100],
+                             totalChlorine: Int :| Interval.Closed[1, 5],
+                             freeChlorine: Int :| Interval.Closed[1, 5],
+                             combinedChlorine: Double :| Interval.Closed[0.0, 0.5],
+                             ph: Double :| Interval.Closed[6.2, 8.4],
+                             calciumHardness: Int :| Interval.Closed[250, 500],
+                             totalAlkalinity: Int :| Interval.Closed[80, 120],
+                             cyanuricAcid: Int :| Interval.Closed[30, 100],
+                             totalBromine: Int :| Interval.Closed[2, 10],
+                             salt: Int :| Interval.Closed[2700, 3400],
+                             temperature: Int :| Interval.Closed[50, 100],
                              measured: Long :| Greater[0]) extends Entity
 
 final case class Chemical(id: Long :| Greater[0],
