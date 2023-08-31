@@ -71,7 +71,6 @@ class EntityTest extends AnyFunSuite with Matchers:
                             unit = UnitOfMeasure.gl,
                             added = Instant.now.getEpochSecond.refine)
 
-    cleaning.id shouldBe 1
-    measurement.id shouldBe 1
-    chemical.id shouldBe 1
+    val chemicalJson = writeToString[Chemical](chemical)
+    chemical shouldBe readFromString[Chemical](chemicalJson)
   }
