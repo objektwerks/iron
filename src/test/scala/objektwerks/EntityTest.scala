@@ -31,6 +31,9 @@ class EntityTest extends AnyFunSuite with Matchers:
                     volume = 10000,
                     unit = UnitOfMeasure.gl)
 
+    val poolJson = writeToString[Pool](pool)
+    pool shouldBe readFromString[Pool](poolJson)
+
     val cleaning = Cleaning(id = 1,
                             poolId = pool.id,
                             brush = true,
