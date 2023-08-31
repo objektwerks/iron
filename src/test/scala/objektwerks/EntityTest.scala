@@ -54,4 +54,8 @@ class EntityTest extends AnyFunSuite with Matchers:
                             amount = 2.5,
                             unit = UnitOfMeasure.gl,
                             added = Instant.now.getEpochSecond.refine)
+
+    cleaning.id shouldBe 1
+    measurement.id shouldBe 1
+    chemical.id shouldBe 1
   }
