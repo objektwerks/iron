@@ -1,5 +1,7 @@
 package objektwerks
 
+import com.github.plokhotnyuk.jsoniter_scala.core.*
+
 import io.github.iltotore.iron.*
 
 import java.time.Instant
@@ -7,6 +9,8 @@ import java.util.UUID
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+
+import Entity.given
 
 class EntityTest extends AnyFunSuite with Matchers:
   test("entity") {
@@ -16,6 +20,9 @@ class EntityTest extends AnyFunSuite with Matchers:
                           pin = "1a2b3c!",
                           activated = Instant.now.getEpochSecond.refine,
                           deactivated = 0)
+
+    val accountJson = writeToString[Account](account)
+    account shouldBe readFromString[Account](accountJson)
 
     val pool = Pool(id = 1,
                     accountId = account.id,
