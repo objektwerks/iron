@@ -34,5 +34,19 @@ class EntityTest extends AnyFunSuite with Matchers:
                             vacuum = true,
                             cleaned = Instant.now.getEpochSecond.refine)
 
+    val measurement = Measurement(id = 1,
+                                  poolId = pool.id,
+                                  totalChlorine = 3,
+                                  freeChlorine = 3,
+                                  combinedChlorine = 0.3,
+                                  ph = 7.4,
+                                  calciumHardness = 300,
+                                  totalAlkalinity = 100,
+                                  cyanuricAcid = 65,
+                                  totalBromine = 6,
+                                  salt = 3100,
+                                  temperature = 80,
+                                  measured = Instant.now.getEpochSecond.refine)
+
     
   }
