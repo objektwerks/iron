@@ -48,5 +48,10 @@ class EntityTest extends AnyFunSuite with Matchers:
                                   temperature = 80,
                                   measured = Instant.now.getEpochSecond.refine)
 
-    
+    val chemical = Chemical(id = 1,
+                            poolId = pool.id,
+                            typeof = TypeOfChemical.LiquidChlorine,
+                            amount = 2.5,
+                            unit = UnitOfMeasure.gl,
+                            added = Instant.now.getEpochSecond.refine)
   }
