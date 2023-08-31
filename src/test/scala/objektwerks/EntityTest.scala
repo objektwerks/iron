@@ -23,4 +23,16 @@ class EntityTest extends AnyFunSuite with Matchers:
                     built = 2022,
                     volume = 10000,
                     unit = UnitOfMeasure.gl)
+
+    val cleaning = Cleaning(id = 1,
+                            poolId = pool.id,
+                            brush = true,
+                            net = true,
+                            skimmerBasket = true,
+                            pumpBasket = true,
+                            pumpFilter = true,
+                            vacuum = true,
+                            cleaned = Instant.now.getEpochSecond.refine)
+
+    
   }
