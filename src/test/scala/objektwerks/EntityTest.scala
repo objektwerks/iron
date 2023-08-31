@@ -44,6 +44,9 @@ class EntityTest extends AnyFunSuite with Matchers:
                             vacuum = true,
                             cleaned = Instant.now.getEpochSecond.refine)
 
+    val cleaningJson = writeToString[Cleaning](cleaning)
+    cleaning shouldBe readFromString[Cleaning](cleaningJson)
+
     val measurement = Measurement(id = 1,
                                   poolId = pool.id,
                                   totalChlorine = 3,
