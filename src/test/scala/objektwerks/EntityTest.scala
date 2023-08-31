@@ -17,5 +17,10 @@ class EntityTest extends AnyFunSuite with Matchers:
                           activated = Instant.now.getEpochSecond.refine,
                           deactivated = 0)
 
-    account.id shouldBe 1
+    val pool = Pool(id = 1,
+                    accountId = account.id,
+                    name = "blue", 
+                    built = 2022,
+                    volume = 10000,
+                    unit = UnitOfMeasure.gl)
   }
