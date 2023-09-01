@@ -16,12 +16,12 @@ sealed trait Entity:
   val id: Long
 
 object Entity:
-  given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]( CodecMakerConfig.withDiscriminatorFieldName(None) )
-  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]( CodecMakerConfig.withDiscriminatorFieldName(None) )
-  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]( CodecMakerConfig.withDiscriminatorFieldName(None) )
-  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]( CodecMakerConfig.withDiscriminatorFieldName(None) )
-  given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]( CodecMakerConfig.withDiscriminatorFieldName(None) )
-  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]( CodecMakerConfig.withDiscriminatorFieldName(None) )
+  given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
+  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]
+  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]
+  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]
+  given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
+  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
 final case class Account(id: Long :| GreaterEqual[0],
                          license: String :| ValidUUID,
