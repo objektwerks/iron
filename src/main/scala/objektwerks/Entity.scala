@@ -31,7 +31,7 @@ final case class Account(id: Long :| GreaterEqual[0],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
-/* This code causes the Scala3 compiler to blow up!!!
+/* This code blows up the Scala3 compiler!!!
 extension(account: Account)
   def validate: Valid =
     val map = mutable.Map.empty[String, String]
