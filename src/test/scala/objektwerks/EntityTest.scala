@@ -25,7 +25,7 @@ class EntityTest extends AnyFunSuite with Matchers:
     account shouldBe readFromString[Account](accountJson)
 
     val pool = Pool(id = 1,
-                    accountId = account.id,
+                    accountId = account.id.refine,
                     name = "blue", 
                     built = 2022,
                     volume = 10000,
@@ -35,7 +35,7 @@ class EntityTest extends AnyFunSuite with Matchers:
     pool shouldBe readFromString[Pool](poolJson)
 
     val cleaning = Cleaning(id = 1,
-                            poolId = pool.id,
+                            poolId = pool.id.refine,
                             brush = true,
                             net = true,
                             skimmerBasket = true,
@@ -48,7 +48,7 @@ class EntityTest extends AnyFunSuite with Matchers:
     cleaning shouldBe readFromString[Cleaning](cleaningJson)
 
     val measurement = Measurement(id = 1,
-                                  poolId = pool.id,
+                                  poolId = pool.id.refine,
                                   totalChlorine = 3,
                                   freeChlorine = 3,
                                   combinedChlorine = 0.3,
@@ -65,7 +65,7 @@ class EntityTest extends AnyFunSuite with Matchers:
     measurement shouldBe readFromString[Measurement](measurementJson)
 
     val chemical = Chemical(id = 1,
-                            poolId = pool.id,
+                            poolId = pool.id.refine,
                             typeof = TypeOfChemical.LiquidChlorine,
                             amount = 2.5,
                             unit = UnitOfMeasure.gl,
