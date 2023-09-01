@@ -9,8 +9,6 @@ import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
-// import scala.collection.mutable
-
 final case class Valid(map: Map[String, String]):
   def isValid: Boolean = map.isEmpty
 
@@ -32,6 +30,7 @@ final case class Account(id: Long :| GreaterEqual[0],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 /* This code blows up the Scala3 compiler!!!
+import scala.collection.mutable
 extension(account: Account)
   def validate: Valid =
     val map = mutable.Map.empty[String, String]
@@ -42,6 +41,18 @@ extension(account: Account)
     account.activated.refineEither[GreaterEqual[0]].fold(left => map += "activated" -> left, right => right)
     account.deactivated.refineEither[GreaterEqual[0]].fold(left => map += "deactivated" -> left, right => right)
     Valid(map.toMap) */
+
+/* No given instance for constraint X, a common error above as well. WTF over? :)
+extension(account: Account)
+  def validate: Either[String, Account] =
+    for
+      id           <- account.id.refineEither[GreaterEqual[0]]
+      license      <- account.license.refineEither[ValidUUID]
+      emailAddress <- account.emailAddress.refineEither[MinLength[3]]
+      pin          <- account.pin.refineEither[FixedLength[7]]
+      activated    <- account.activated.refineEither[GreaterEqual[0]]
+      deactivated  <- account.deactivated.refineEither[GreaterEqual[0]]
+    yield Account(id, license, emailAddress, pin, activated, deactivated) */
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
