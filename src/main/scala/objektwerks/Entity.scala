@@ -10,7 +10,6 @@ import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interv
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
 // import scala.collection.mutable
-// import scala.util.Try
 
 final case class Valid(map: Map[String, String]):
   def isValid: Boolean = map.isEmpty
