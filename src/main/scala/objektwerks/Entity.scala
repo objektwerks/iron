@@ -9,8 +9,8 @@ import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
-import scala.collection.mutable
-import scala.util.Try
+// import scala.collection.mutable
+// import scala.util.Try
 
 final case class Valid(map: Map[String, String]):
   def isValid: Boolean = map.isEmpty
@@ -32,7 +32,7 @@ final case class Account(id: Long :| GreaterEqual[0],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
-
+/* This code causes Scala3 compiler to blow up!!!
 extension(account: Account)
   def validate: Valid =
     val map = mutable.Map.empty[String, String]
@@ -42,7 +42,7 @@ extension(account: Account)
     account.pin.refineEither[FixedLength[7]].fold(left => map += "pin" -> left, right => right)
     account.activated.refineEither[GreaterEqual[0]].fold(left => map += "activated" -> left, right => right)
     account.deactivated.refineEither[GreaterEqual[0]].fold(left => map += "deactivated" -> left, right => right)
-    Valid(map.toMap)
+    Valid(map.toMap) */
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
