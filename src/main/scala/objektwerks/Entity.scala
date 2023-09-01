@@ -29,6 +29,7 @@ final case class Account(id: Long :| GreaterEqual[0],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
+
 /* This code blows up the Scala3 compiler!!!
 import scala.collection.mutable
 extension(account: Account)
