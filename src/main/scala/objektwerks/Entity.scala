@@ -4,6 +4,7 @@ import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
+import io.github.iltotore.iron.given
 import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
@@ -37,7 +38,11 @@ extension(account: Account)
   def validate: Valid =
     val map = mutable.Map.empty[String, String]
     Try( account.id.refine[GreaterEqual[0]] ).fold(left => map += "id" -> left.getMessage, right => right)
-
+    Try( account.license.refine[ValidUUID] ).fold(left => map += "license" -> left.getMessage, right => right)
+    Try( account.emailAddress.refine[MinLength[3]] ).fold(left => map += "emailAddress" -> left.getMessage, right => right)
+    Try( account.pin.refine[FixedLength[7]] ).fold(left => map += "pin" -> left.getMessage, right => right)
+    Try( account.activated.refine[GreaterEqual[0]] ).fold(left => map += "activated" -> left.getMessage, right => right)
+    Try( account.deactivated.refine[GreaterEqual[0]] ).fold(left => map += "deactivated" -> left.getMessage, right => right)
     Valid(map.toMap)
 
 final case class Pool(id: Long :| GreaterEqual[0],
