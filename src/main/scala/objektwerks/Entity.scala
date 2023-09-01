@@ -20,21 +20,21 @@ object Entity:
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]( CodecMakerConfig.withDiscriminatorFieldName(None) )
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]( CodecMakerConfig.withDiscriminatorFieldName(None) )
 
-final case class Account(id: Long :| Greater[0],
+final case class Account(id: Long :| GreaterEqual[0],
                          license: String :| ValidUUID,
                          emailAddress: String :| MinLength[3],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
-final case class Pool(id: Long :| Greater[0],
+final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
                       name: String :| MinLength[3], 
                       built: Int :| Greater[0],
                       volume: Int :| GreaterEqual[100],
                       unit: UnitOfMeasure) extends Entity
 
-final case class Cleaning(id: Long :| Greater[0],
+final case class Cleaning(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
                           brush: Boolean,
                           net: Boolean,
@@ -44,7 +44,7 @@ final case class Cleaning(id: Long :| Greater[0],
                           vacuum: Boolean,
                           cleaned: Long :| Greater[0]) extends Entity
 
-final case class Measurement(id: Long :| Greater[0],
+final case class Measurement(id: Long :| GreaterEqual[0],
                              poolId: Long :| Greater[0],
                              totalChlorine: Int :| Interval.Closed[1, 5],
                              freeChlorine: Int :| Interval.Closed[1, 5],
@@ -58,7 +58,7 @@ final case class Measurement(id: Long :| Greater[0],
                              temperature: Int :| Interval.Closed[50, 100],
                              measured: Long :| Greater[0]) extends Entity
 
-final case class Chemical(id: Long :| Greater[0],
+final case class Chemical(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
                           typeof: TypeOfChemical,
                           amount: Double :| Greater[0.0],
