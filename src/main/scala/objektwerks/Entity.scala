@@ -9,6 +9,12 @@ import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
+import scala.collection.mutable
+import scala.util.Try
+
+final case class Valid(map: Map[String, String]):
+  def isValid: Boolean = map.isEmpty
+
 sealed trait Entity:
   val id: Long
 
@@ -26,6 +32,13 @@ final case class Account(id: Long :| GreaterEqual[0],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
+
+extension(account: Account)
+  def validate: Valid =
+    val map = mutable.Map.empty[String, String]
+    Try( account.id.refine[GreaterEqual[0]] ).fold(left => map += "id" -> left.getMessage, right => right)
+
+    Valid(map.toMap)
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
