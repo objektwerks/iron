@@ -43,7 +43,7 @@ extension(account: Account)
     account.deactivated.refineEither[GreaterEqual[0]].fold(left => map += "deactivated" -> left, right => right)
     Valid(map.toMap) */
 
-/* No given instance for constraint X, a common error above as well. WTF over? :)
+/* No given instance for constraint X, a common error above as well.
 extension(account: Account)
   def validate: Either[String, Account] =
     for
