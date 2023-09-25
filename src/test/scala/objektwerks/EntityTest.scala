@@ -12,8 +12,8 @@ import org.scalatest.matchers.should.Matchers
 
 import Entity.given
 
-class EntityTest extends AnyFunSuite with Matchers:
-  test("refine") {
+final class EntityTest extends AnyFunSuite with Matchers:
+  test("refine"):
     val account = Account(id = 1,
                           license = UUID.randomUUID.toString.refine,
                           emailAddress = "emailaddress@email.com",
@@ -73,4 +73,3 @@ class EntityTest extends AnyFunSuite with Matchers:
 
     val chemicalJson = writeToString[Chemical](chemical)
     chemical shouldBe readFromString[Chemical](chemicalJson)
-  }
