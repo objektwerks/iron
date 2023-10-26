@@ -2,10 +2,6 @@ Iron
 ----
 >Iron feature tests using Jsoniter and Scala 3.
 
-Warning
--------
->As of 2023.9.3, **Iron** does not work correctly with Scala 3. See **Entity.Account** for examples.
-
 Build
 -----
 1. sbt clean compile
