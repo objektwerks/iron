@@ -14,27 +14,27 @@ import Entity.given
 
 final class EntityTest extends AnyFunSuite with Matchers:
   test("refine"):
-    val account = Account(id = 1.refine,
+    val account = Account(id = 1,
                           license = UUID.randomUUID.toString.refine,
-                          emailAddress = "emailaddress@email.com".refine,
-                          pin = "1a2b3c!".refine,
+                          emailAddress = "emailaddress@email.com",
+                          pin = "1a2b3c!",
                           activated = Instant.now.getEpochSecond.refine,
-                          deactivated = 0.refine)
+                          deactivated = 0)
 
     val accountJson = writeToString[Account](account)
     account shouldBe readFromString[Account](accountJson)
 
-    val pool = Pool(id = 1.refine,
+    val pool = Pool(id = 1,
                     accountId = account.id.refine,
-                    name = "blue".refine, 
-                    built = 2022.refine,
-                    volume = 10000.refine,
+                    name = "blue", 
+                    built = 2022,
+                    volume = 10000,
                     unit = UnitOfMeasure.gl)
 
     val poolJson = writeToString[Pool](pool)
     pool shouldBe readFromString[Pool](poolJson)
 
-    val cleaning = Cleaning(id = 1.refine,
+    val cleaning = Cleaning(id = 1,
                             poolId = pool.id.refine,
                             brush = true,
                             net = true,
@@ -47,27 +47,27 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val cleaningJson = writeToString[Cleaning](cleaning)
     cleaning shouldBe readFromString[Cleaning](cleaningJson)
 
-    val measurement = Measurement(id = 1.refine,
+    val measurement = Measurement(id = 1,
                                   poolId = pool.id.refine,
-                                  totalChlorine = 3.refine,
-                                  freeChlorine = 3.refine,
-                                  combinedChlorine = 0.3.refine,
-                                  ph = 7.4.refine,
-                                  calciumHardness = 300.refine,
-                                  totalAlkalinity = 100.refine,
-                                  cyanuricAcid = 65.refine,
-                                  totalBromine = 6.refine,
-                                  salt = 3100.refine,
-                                  temperature = 80.refine,
+                                  totalChlorine = 3,
+                                  freeChlorine = 3,
+                                  combinedChlorine = 0.3,
+                                  ph = 7.4,
+                                  calciumHardness = 300,
+                                  totalAlkalinity = 100,
+                                  cyanuricAcid = 65,
+                                  totalBromine = 6,
+                                  salt = 3100,
+                                  temperature = 80,
                                   measured = Instant.now.getEpochSecond.refine)
 
     val measurementJson = writeToString[Measurement](measurement)
     measurement shouldBe readFromString[Measurement](measurementJson)
 
-    val chemical = Chemical(id = 1.refine,
+    val chemical = Chemical(id = 1,
                             poolId = pool.id.refine,
                             typeof = TypeOfChemical.LiquidChlorine,
-                            amount = 2.5.refine,
+                            amount = 2.5,
                             unit = UnitOfMeasure.gl,
                             added = Instant.now.getEpochSecond.refine)
 
