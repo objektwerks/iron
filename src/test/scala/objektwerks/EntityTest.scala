@@ -14,12 +14,12 @@ import Entity.given
 
 final class EntityTest extends AnyFunSuite with Matchers:
   test("refine"):
-    val account = Account(id = 1,
+    val account = Account(id = 1.refine,
                           license = UUID.randomUUID.toString.refine,
-                          emailAddress = "emailaddress@email.com",
-                          pin = "1a2b3c!",
+                          emailAddress = "emailaddress@email.com".refine,
+                          pin = "1a2b3c!".refine,
                           activated = Instant.now.getEpochSecond.refine,
-                          deactivated = 0)
+                          deactivated = 0.refine)
 
     val accountJson = writeToString[Account](account)
     account shouldBe readFromString[Account](accountJson)
