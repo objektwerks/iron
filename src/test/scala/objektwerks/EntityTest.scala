@@ -34,7 +34,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val poolJson = writeToString[Pool](pool)
     pool shouldBe readFromString[Pool](poolJson)
 
-    val cleaning = Cleaning(id = 1,
+    val cleaning = Cleaning(id = 1.refine,
                             poolId = pool.id.refine,
                             brush = true,
                             net = true,
