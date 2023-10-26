@@ -7,7 +7,6 @@ import io.github.iltotore.iron.*
 import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
-import io.github.iltotore.iron.constraint.string.ValidUUID
 
 sealed trait Entity:
   val id: Long
@@ -21,24 +20,11 @@ object Entity:
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
 final case class Account(id: Long :| GreaterEqual[0],
-                         license: String :| ValidUUID,
+                         license: String :| FixedLength[36],
                          emailAddress: String :| MinLength[3],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
-
-/* No given instance for constraint X, a common error above as well.
-extension(account: Account)
-  def validate: Either[String, Account] =
-    for
-      id           <- account.id.refineEither[GreaterEqual[0]]
-      license      <- account.license.refineEither[ValidUUID]
-      emailAddress <- account.emailAddress.refineEither[MinLength[3]]
-      pin          <- account.pin.refineEither[FixedLength[7]]
-      activated    <- account.activated.refineEither[GreaterEqual[0]]
-      deactivated  <- account.deactivated.refineEither[GreaterEqual[0]]
-    yield Account(id, license, emailAddress, pin, activated, deactivated)
-*/
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
