@@ -9,9 +9,6 @@ import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 import io.github.iltotore.iron.constraint.string.ValidUUID
 
-final case class Valid(map: Map[String, String]):
-  def isValid: Boolean = map.isEmpty
-
 sealed trait Entity:
   val id: Long
 
@@ -29,20 +26,6 @@ final case class Account(id: Long :| GreaterEqual[0],
                          pin: String :| FixedLength[7],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
-
-/* This code blows up the Scala3 compiler!!!
-import scala.collection.mutable
-extension(account: Account)
-  def validate: Valid =
-    val map = mutable.Map.empty[String, String]
-    account.id.refineEither[GreaterEqual[0]].fold(left => map += "id" -> left, right => right)
-    account.license.refineEither[ValidUUID].fold(left => map += "license" -> left, right => right)
-    account.emailAddress.refineEither[MinLength[3]].fold(left => map += "emailAddress" -> left, right => right)
-    account.pin.refineEither[FixedLength[7]].fold(left => map += "pin" -> left, right => right)
-    account.activated.refineEither[GreaterEqual[0]].fold(left => map += "activated" -> left, right => right)
-    account.deactivated.refineEither[GreaterEqual[0]].fold(left => map += "deactivated" -> left, right => right)
-    Valid(map.toMap)
-*/
 
 /* No given instance for constraint X, a common error above as well.
 extension(account: Account)
