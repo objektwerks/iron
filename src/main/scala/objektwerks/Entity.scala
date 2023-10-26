@@ -41,7 +41,8 @@ extension(account: Account)
     account.pin.refineEither[FixedLength[7]].fold(left => map += "pin" -> left, right => right)
     account.activated.refineEither[GreaterEqual[0]].fold(left => map += "activated" -> left, right => right)
     account.deactivated.refineEither[GreaterEqual[0]].fold(left => map += "deactivated" -> left, right => right)
-    Valid(map.toMap) */
+    Valid(map.toMap)
+*/
 
 /* No given instance for constraint X, a common error above as well.
 extension(account: Account)
@@ -53,7 +54,8 @@ extension(account: Account)
       pin          <- account.pin.refineEither[FixedLength[7]]
       activated    <- account.activated.refineEither[GreaterEqual[0]]
       deactivated  <- account.deactivated.refineEither[GreaterEqual[0]]
-    yield Account(id, license, emailAddress, pin, activated, deactivated) */
+    yield Account(id, license, emailAddress, pin, activated, deactivated)
+*/
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
