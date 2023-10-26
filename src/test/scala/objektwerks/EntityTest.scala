@@ -64,10 +64,10 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val measurementJson = writeToString[Measurement](measurement)
     measurement shouldBe readFromString[Measurement](measurementJson)
 
-    val chemical = Chemical(id = 1,
+    val chemical = Chemical(id = 1.refine,
                             poolId = pool.id.refine,
                             typeof = TypeOfChemical.LiquidChlorine,
-                            amount = 2.5,
+                            amount = 2.5.refine,
                             unit = UnitOfMeasure.gl,
                             added = Instant.now.getEpochSecond.refine)
 
