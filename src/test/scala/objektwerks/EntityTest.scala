@@ -24,11 +24,11 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val accountJson = writeToString[Account](account)
     account shouldBe readFromString[Account](accountJson)
 
-    val pool = Pool(id = 1,
+    val pool = Pool(id = 1.refine,
                     accountId = account.id.refine,
-                    name = "blue", 
-                    built = 2022,
-                    volume = 10000,
+                    name = "blue".refine, 
+                    built = 2022.refine,
+                    volume = 10000.refine,
                     unit = UnitOfMeasure.gl)
 
     val poolJson = writeToString[Pool](pool)
