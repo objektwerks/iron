@@ -8,6 +8,16 @@ import scala.collection.mutable
 
 object Validator:
   extension(account: Account)
+    def validate(): Either[String, Account] =
+      for
+        id           <- account.id.refineEither[GreaterEqual[0]]
+        license      <- account.license.refineEither[FixedLength[36]]
+        emailAddress <- account.emailAddress.refineEither[MinLength[3]]
+        pin          <- account.pin.refineEither[FixedLength[7]]
+        activated    <- account.activated.refineEither[GreaterEqual[0]]
+        deactivated  <- account.deactivated.refineEither[GreaterEqual[0]]
+      yield Account(id, license, emailAddress, pin, activated, deactivated)
+
     def validations(): Map[String, String] =
       val map = mutable.Map.empty[String, String]
       for

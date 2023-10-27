@@ -11,15 +11,20 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import Entity.given
+import objektwerks.Validator.validate
+import objektwerks.Validator.validations
 
 final class EntityTest extends AnyFunSuite with Matchers:
   test("refine"):
     val account = Account(id = 1,
-                          license = UUID.randomUUID.toString.refine,
+                          license = UUID.randomUUID.toString,
                           emailAddress = "emailaddress@email.com",
                           pin = "1a2b3c!",
-                          activated = Instant.now.getEpochSecond.refine,
+                          activated = Instant.now.getEpochSecond,
                           deactivated = 0)
+    
+    account.validate().isRight shouldBe true
+    account.validations().size shouldBe 0
 
     val accountJson = writeToString[Account](account)
     account shouldBe readFromString[Account](accountJson)

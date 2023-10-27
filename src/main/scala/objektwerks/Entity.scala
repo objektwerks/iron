@@ -5,7 +5,7 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.jsoniter.given
-import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
+import io.github.iltotore.iron.constraint.collection.MinLength
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 
 sealed trait Entity:
@@ -19,12 +19,12 @@ object Entity:
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
-final case class Account(id: Long :| GreaterEqual[0],
-                         license: String :| FixedLength[36],
-                         emailAddress: String :| MinLength[3],
-                         pin: String :| FixedLength[7],
-                         activated: Long :| GreaterEqual[0],
-                         deactivated: Long :| GreaterEqual[0]) extends Entity
+final case class Account(id: Long,
+                         license: String,
+                         emailAddress: String,
+                         pin: String,
+                         activated: Long,
+                         deactivated: Long) extends Entity
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
