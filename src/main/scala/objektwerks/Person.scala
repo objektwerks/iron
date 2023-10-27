@@ -13,7 +13,7 @@ import scala.collection.mutable
 sealed abstract case class Person private(id: String, name: String, age: Int)
 
 object Person:
-  given JsonValueCodec[Person] = JsonCodecMaker.make[Person]
+  given JsonValueCodec[Person] = JsonCodecMaker.make[Person] // Results in stackoverflow error!
 
   def validate(id: String, name: String, age: Int): Either[String, Person] =
     for
