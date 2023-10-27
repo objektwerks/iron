@@ -31,7 +31,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
                     name = "blue", 
                     built = 2022,
                     volume = 10000,
-                    unit = UnitOfMeasure.gl)
+                    unit = UnitOfMeasure.gl) // Refactor!
 
     val poolJson = writeToString[Pool](pool)
     pool shouldBe readFromString[Pool](poolJson)
@@ -44,7 +44,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
                             pumpBasket = true,
                             pumpFilter = true,
                             vacuum = true,
-                            cleaned = Instant.now.getEpochSecond.refine)
+                            cleaned = Instant.now.getEpochSecond.refine) // Refactor!
 
     val cleaningJson = writeToString[Cleaning](cleaning)
     cleaning shouldBe readFromString[Cleaning](cleaningJson)
@@ -61,7 +61,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
                                   totalBromine = 6,
                                   salt = 3100,
                                   temperature = 80,
-                                  measured = Instant.now.getEpochSecond.refine)
+                                  measured = Instant.now.getEpochSecond.refine) // Refactor!
 
     val measurementJson = writeToString[Measurement](measurement)
     measurement shouldBe readFromString[Measurement](measurementJson)
@@ -71,7 +71,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
                             typeof = TypeOfChemical.LiquidChlorine,
                             amount = 2.5,
                             unit = UnitOfMeasure.gl,
-                            added = Instant.now.getEpochSecond.refine)
+                            added = Instant.now.getEpochSecond.refine) // Refactor!
 
     val chemicalJson = writeToString[Chemical](chemical)
     chemical shouldBe readFromString[Chemical](chemicalJson)
