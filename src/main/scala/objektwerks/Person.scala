@@ -7,20 +7,18 @@ import io.github.iltotore.iron.*
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.Greater
 
-import scala.collection.mutable
-
 final case class Person private(id: String, name: String, age: Int)
 
 object Person:
   given JsonValueCodec[Person] = JsonCodecMaker.make[Person]
 
-  def validate(id: String, name: String, age: Int): Either[Map[String, String], Person] =
-    val map = mutable.Map.empty[String, String]
+  def validate(id: String, name: String, age: Int): Either[Validations, Person] =
+    val validations = Validations()
     val either = for
-      i <- id.refineEither[FixedLength[1]].left.map(error => map += "id" -> error)
-      n <- name.refineEither[MinLength[2]].left.map(error => map += "name" -> error)
-      a <- age.refineEither[Greater[0]].left.map(error => map += "age" -> error)
+      i <- id.refineEither[FixedLength[1]].left.map(error => validations.add("id", error))
+      n <- name.refineEither[MinLength[2]].left.map(error => validations.add("name", error))
+      a <- age.refineEither[Greater[0]].left.map(error => validations.add("age", error))
     yield Person(i, n, a)
 
-    if map.isEmpty then Right(either.right.get)
-    else Left(map.toMap)
+    if validations.isValid then Right(either.right.get)
+    else Left(validations)
