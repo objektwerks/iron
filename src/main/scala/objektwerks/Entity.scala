@@ -91,7 +91,10 @@ final case class Chemical(id: Long :| GreaterEqual[0],
                           typeof: TypeOfChemical,
                           amount: Double :| Greater[0.0],
                           unit: UnitOfMeasure,
-                          added: Long :| Greater[0]) extends Entity // Refactor!
+                          added: Long :| Greater[0]) extends Entity
+
+object Chemical:
+  def validate(): Either[Invalidations, Chemical] = ??? // Build!
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
