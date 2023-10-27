@@ -13,10 +13,10 @@ object Person:
   given JsonValueCodec[Person] = JsonCodecMaker.make[Person]
 
   def validate(name: String, age: Int): Either[Invalidations, Person] =
-    val invalids = Invalidations()
+    val invalidations = Invalidations()
     val either = for
-      n <- name.refineEither[MinLength[2]].left.map(error => invalids.add("name", error))
-      a <- age.refineEither[Greater[0]].left.map(error => invalids.add("age", error))
+      n <- name.refineEither[MinLength[2]].left.map(error => invalidations.add("name", error))
+      a <- age.refineEither[Greater[0]].left.map(error => invalidations.add("age", error))
     yield Person(n, a)
-    if invalids.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalids)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
