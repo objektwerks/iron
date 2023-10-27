@@ -26,6 +26,22 @@ final case class Account(id: Long :| GreaterEqual[0],
                          activated: Long :| GreaterEqual[0],
                          deactivated: Long :| GreaterEqual[0]) extends Entity
 
+object Account:
+    def apply(id: Long,
+              license: String,
+              emailAddress: String,
+              pin: String,
+              activated: Long,
+              deactivated: Long): Either[String, Account] =
+      for
+        id           <- id.refineEither[GreaterEqual[0]]
+        license      <- license.refineEither[FixedLength[36]]
+        emailAddress <- emailAddress.refineEither[MinLength[3]]
+        pin          <- pin.refineEither[FixedLength[7]]
+        activated    <- activated.refineEither[GreaterEqual[0]]
+        deactivated  <- deactivated.refineEither[GreaterEqual[0]]
+      yield Account(id, license, emailAddress, pin, activated, deactivated)
+
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
                       name: String :| MinLength[3], 
