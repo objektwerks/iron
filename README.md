@@ -5,7 +5,7 @@ Iron
 Note
 ----
 >See ```Validator``` for issues with using collection constraints on String values
->outside of a case class constructor.
+>outside of a case class constructor. Samme issues arise in a for comprehension.
 
 Build
 -----
