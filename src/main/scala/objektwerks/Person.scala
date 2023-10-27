@@ -17,7 +17,7 @@ object Person:
   def validate(id: String, name: String, age: Int): Either[Map[String, String], Person] =
     val map = mutable.Map.empty[String, String]
     val either = for
-      i <- id.refineEither[FixedLength[1]].left.map(error => map += "name" -> error)
+      i <- id.refineEither[FixedLength[1]].left.map(error => map += "id" -> error)
       n <- name.refineEither[MinLength[2]].left.map(error => map += "name" -> error)
       a <- age.refineEither[Greater[0]].left.map(error => map += "age" -> error)
     yield Person(i, n, a)
