@@ -51,7 +51,10 @@ final case class Pool(id: Long :| GreaterEqual[0],
                       name: String :| MinLength[3], 
                       built: Int :| Greater[0],
                       volume: Int :| GreaterEqual[100],
-                      unit: UnitOfMeasure) extends Entity // Refactor!
+                      unit: UnitOfMeasure) extends Entity
+
+object Pool:
+  def validate(): Either[Invalidations, Pool] = ??? // Build!
 
 final case class Cleaning(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
