@@ -24,7 +24,7 @@ final case class Account(id: Long,
                          emailAddress: String,
                          pin: String,
                          activated: Long,
-                         deactivated: Long) extends Entity
+                         deactivated: Long) extends Entity // See Validator and Entity Test for why Account is different.
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
