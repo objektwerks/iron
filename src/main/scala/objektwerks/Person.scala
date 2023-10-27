@@ -12,8 +12,8 @@ final case class Person private(name: String, age: Int)
 object Person:
   given JsonValueCodec[Person] = JsonCodecMaker.make[Person]
 
-  def validate(name: String, age: Int): Either[Invalids, Person] =
-    val invalids = Invalids()
+  def validate(name: String, age: Int): Either[Invalidations, Person] =
+    val invalids = Invalidations()
     val either = for
       n <- name.refineEither[MinLength[2]].left.map(error => invalids.add("name", error))
       a <- age.refineEither[Greater[0]].left.map(error => invalids.add("age", error))
