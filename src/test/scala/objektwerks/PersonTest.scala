@@ -7,10 +7,10 @@ import org.scalatest.matchers.should.Matchers
 
 final class PersonTest extends AnyFunSuite with Matchers:
   test("validate"):
-    val validPerson = Person.validate("1", "fred", 24)
+    val validPerson = Person.validate("fred", 24)
     validPerson.isValid shouldBe true
 
-    val invalidPerson = Person.validate("12", "fred", 24)
+    val invalidPerson = Person.validate("fred", 0)
     invalidPerson.isValid shouldBe false
 
     val person = validPerson.entity
