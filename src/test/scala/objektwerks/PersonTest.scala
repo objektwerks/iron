@@ -19,3 +19,4 @@ final class PersonTest extends AnyFunSuite with Matchers:
 
     // Person("fred", 21) - Invalid call! No public Person.apply(...) available!
     // person.copy(name = "barney") - Invalid call! No public person.copy(...) available!
+    // Must construct a Person with Person.validate(...)
