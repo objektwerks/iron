@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 object Validator:
   extension(account: Account)
-    def validate(): Map[String, String] =
+    def validations(): Map[String, String] =
       val map = mutable.Map.empty[String, String]
       for
         _ <- account.id.refineEither[GreaterEqual[0]].left.map(error => map += "id" -> error)
