@@ -2,7 +2,7 @@ package objektwerks
 
 import scala.collection.mutable
 
-final class Validations():
+final class Invalids():
   type Field = String
   type Message = String
 
