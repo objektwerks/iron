@@ -81,7 +81,10 @@ final case class Measurement(id: Long :| GreaterEqual[0],
                              totalBromine: Int :| Interval.Closed[2, 10],
                              salt: Int :| Interval.Closed[2700, 3400],
                              temperature: Int :| Interval.Closed[50, 100],
-                             measured: Long :| Greater[0]) extends Entity // Refactor!
+                             measured: Long :| Greater[0]) extends Entity
+
+object Measurement:
+  def validate(): Either[Invalidations, Measurement] = ??? // Build!
 
 final case class Chemical(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
