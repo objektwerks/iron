@@ -4,6 +4,7 @@ import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
+import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.Greater
 
