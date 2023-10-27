@@ -64,7 +64,10 @@ final case class Cleaning(id: Long :| GreaterEqual[0],
                           pumpBasket: Boolean,
                           pumpFilter: Boolean,
                           vacuum: Boolean,
-                          cleaned: Long :| Greater[0]) extends Entity // Refactor!
+                          cleaned: Long :| Greater[0]) extends Entity
+
+object Cleaning:
+  def validate(): Either[Invalidations, Cleaning] = ??? // Build!
 
 final case class Measurement(id: Long :| GreaterEqual[0],
                              poolId: Long :| Greater[0],
