@@ -13,7 +13,6 @@ sealed trait Entity:
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
-  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]
   given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
@@ -46,15 +45,32 @@ object Account:
     if invalidations.isEmpty && either.isRight then Right(either.right.get)
     else Left(invalidations)
 
-final case class Pool(id: Long :| GreaterEqual[0],
-                      accountId: Long :| Greater[0],
-                      name: String :| MinLength[3], 
-                      built: Int :| Greater[0],
-                      volume: Int :| GreaterEqual[100],
-                      unit: UnitOfMeasure) extends Entity // Make private!
+final case class Pool private (id: Long,
+                               accountId: Long,
+                               name: String, 
+                               built: Int,
+                               volume: Int,
+                               unit: UnitOfMeasure) extends Entity
 
 object Pool:
-  def validate(): Either[Invalidations, Pool] = ??? // Build!
+  given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]
+
+  def validate(id: Long,
+               accountId: Long,
+               name: String,
+               built: Int,
+               volume: Int,
+               unit: UnitOfMeasure): Either[Invalidations, Pool] =
+    val invalidations = Invalidations()
+    val either = for
+      id        <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      accountId <- accountId.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("accountId", error))
+      name      <- name.refineEither[MinLength[3]].left.map(error => invalidations.add("name", error))
+      built     <- built.refineEither[Greater[0]].left.map(error => invalidations.add("built", error))
+      volume    <- volume.refineEither[GreaterEqual[100]].left.map(error => invalidations.add("volume", error))
+    yield Pool(id, accountId, name, built, volume, unit)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
 
 final case class Cleaning(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
