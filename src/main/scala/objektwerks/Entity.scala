@@ -13,20 +13,21 @@ sealed trait Entity:
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
-  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]
   given JsonValueCodec[Pool] = JsonCodecMaker.make[Pool]
   given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
-final case class Account(id: Long,
-                         license: String,
-                         emailAddress: String,
-                         pin: String,
-                         activated: Long,
-                         deactivated: Long) extends Entity
+final case class Account private (id: Long,
+                                  license: String,
+                                  emailAddress: String,
+                                  pin: String,
+                                  activated: Long,
+                                  deactivated: Long) extends Entity
 
 object Account:
+  given JsonValueCodec[Account] = JsonCodecMaker.make[Account]
+
   def validate(id: Long,
                license: String,
                emailAddress: String,
