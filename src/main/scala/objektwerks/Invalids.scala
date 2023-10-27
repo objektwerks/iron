@@ -8,7 +8,7 @@ final class Invalids():
 
   private val invalidFields = mutable.Map[Field, Message]()
 
-  def isValid: Boolean = invalidFields.isEmpty
+  def isEmpty: Boolean = invalidFields.isEmpty
 
   def add(field: Field, message: Message): Unit = invalidFields += field -> message
 
