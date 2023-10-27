@@ -51,7 +51,7 @@ final case class Pool(id: Long :| GreaterEqual[0],
                       name: String :| MinLength[3], 
                       built: Int :| Greater[0],
                       volume: Int :| GreaterEqual[100],
-                      unit: UnitOfMeasure) extends Entity
+                      unit: UnitOfMeasure) extends Entity // Refactor!
 
 final case class Cleaning(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
@@ -61,7 +61,7 @@ final case class Cleaning(id: Long :| GreaterEqual[0],
                           pumpBasket: Boolean,
                           pumpFilter: Boolean,
                           vacuum: Boolean,
-                          cleaned: Long :| Greater[0]) extends Entity
+                          cleaned: Long :| Greater[0]) extends Entity // Refactor!
 
 final case class Measurement(id: Long :| GreaterEqual[0],
                              poolId: Long :| Greater[0],
@@ -75,14 +75,14 @@ final case class Measurement(id: Long :| GreaterEqual[0],
                              totalBromine: Int :| Interval.Closed[2, 10],
                              salt: Int :| Interval.Closed[2700, 3400],
                              temperature: Int :| Interval.Closed[50, 100],
-                             measured: Long :| Greater[0]) extends Entity
+                             measured: Long :| Greater[0]) extends Entity // Refactor!
 
 final case class Chemical(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
                           typeof: TypeOfChemical,
                           amount: Double :| Greater[0.0],
                           unit: UnitOfMeasure,
-                          added: Long :| Greater[0]) extends Entity
+                          added: Long :| Greater[0]) extends Entity // Refactor!
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
