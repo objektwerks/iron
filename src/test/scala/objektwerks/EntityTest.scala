@@ -26,18 +26,19 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val accountJson = writeToString[Account](validAccount)
     validAccount shouldBe readFromString[Account](accountJson)
 
-    val pool = Pool(id = 1,
-                    accountId = validAccount.id.refine,
-                    name = "blue", 
-                    built = 2022,
-                    volume = 10000,
-                    unit = UnitOfMeasure.gl) // Refactor!
+    val pool = Pool.validate(id = 1,
+                             accountId = validAccount.id,
+                             name = "blue", 
+                             built = 2022,
+                             volume = 10000,
+                             unit = UnitOfMeasure.gl)
 
-    val poolJson = writeToString[Pool](pool)
-    pool shouldBe readFromString[Pool](poolJson)
+    val validPool = pool.right.get
+    val poolJson = writeToString[Pool](validPool)
+    validPool shouldBe readFromString[Pool](poolJson)
 
     val cleaning = Cleaning(id = 1,
-                            poolId = pool.id.refine,
+                            poolId = validPool.id.refine,
                             brush = true,
                             net = true,
                             skimmerBasket = true,
@@ -50,7 +51,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
     cleaning shouldBe readFromString[Cleaning](cleaningJson)
 
     val measurement = Measurement(id = 1,
-                                  poolId = pool.id.refine,
+                                  poolId = validPool.id.refine,
                                   totalChlorine = 3,
                                   freeChlorine = 3,
                                   combinedChlorine = 0.3,
@@ -67,7 +68,7 @@ final class EntityTest extends AnyFunSuite with Matchers:
     measurement shouldBe readFromString[Measurement](measurementJson)
 
     val chemical = Chemical(id = 1,
-                            poolId = pool.id.refine,
+                            poolId = validPool.id.refine,
                             typeof = TypeOfChemical.LiquidChlorine,
                             amount = 2.5,
                             unit = UnitOfMeasure.gl,
