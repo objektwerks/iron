@@ -16,3 +16,6 @@ final class PersonTest extends AnyFunSuite with Matchers:
     val person = validPerson.right.get
     val personJson = writeToString[Person](person)
     person shouldBe readFromString[Person](personJson)
+
+    // Person("fred", 21) - Invalid call! No public Person.apply(...) available!
+    // person.copy(name = "barney") - Invalid call! No public person.copy(...) available!
