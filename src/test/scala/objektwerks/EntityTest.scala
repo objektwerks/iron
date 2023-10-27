@@ -11,26 +11,23 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import Entity.given
-import objektwerks.Validator.validate
-import objektwerks.Validator.validations
 
 final class EntityTest extends AnyFunSuite with Matchers:
-  test("refine"):
-    val account = Account(id = 1,
-                          license = UUID.randomUUID.toString,
-                          emailAddress = "emailaddress@email.com",
-                          pin = "1a2b3c!",
-                          activated = Instant.now.getEpochSecond,
-                          deactivated = 0)
-    
-    account.validate().isRight shouldBe true
-    account.validations().size shouldBe 0
+  test("validate"):
+    val account = Account.validate(id = 1,
+                                   license = UUID.randomUUID.toString,
+                                   emailAddress = "emailaddress@email.com",
+                                   pin = "1a2b3c!",
+                                   activated = Instant.now.getEpochSecond,
+                                   deactivated = 0)
+    account.isRight shouldBe true
 
-    val accountJson = writeToString[Account](account)
-    account shouldBe readFromString[Account](accountJson)
+    val validAccount = account.right.get
+    val accountJson = writeToString[Account](validAccount)
+    validAccount shouldBe readFromString[Account](accountJson)
 
     val pool = Pool(id = 1,
-                    accountId = account.id.refine,
+                    accountId = validAccount.id.refine,
                     name = "blue", 
                     built = 2022,
                     volume = 10000,
