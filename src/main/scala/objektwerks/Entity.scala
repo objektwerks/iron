@@ -5,7 +5,7 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
 import io.github.iltotore.iron.jsoniter.given
-import io.github.iltotore.iron.constraint.collection.MinLength
+import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 
 sealed trait Entity:
@@ -24,7 +24,26 @@ final case class Account(id: Long,
                          emailAddress: String,
                          pin: String,
                          activated: Long,
-                         deactivated: Long) extends Entity // See Validator and Entity Test for why Account is different.
+                         deactivated: Long) extends Entity
+
+object Account:
+  def validate(id: Long,
+               license: String,
+               emailAddress: String,
+               pin: String,
+               activated: Long,
+               deactivated: Long): Either[Invalidations, Account] =
+    val invalidations = Invalidations()
+    val either = for
+      id           <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      license      <- license.refineEither[FixedLength[36]].left.map(error => invalidations.add("id", error))
+      emailAddress <- emailAddress.refineEither[MinLength[3]].left.map(error => invalidations.add("id", error))
+      pin          <- pin.refineEither[FixedLength[7]].left.map(error => invalidations.add("id", error))
+      activated    <- activated.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      deactivated  <- deactivated.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+    yield Account(id, license, emailAddress, pin, activated, deactivated)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
 
 final case class Pool(id: Long :| GreaterEqual[0],
                       accountId: Long :| Greater[0],
