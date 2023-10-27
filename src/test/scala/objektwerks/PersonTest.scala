@@ -8,11 +8,11 @@ import org.scalatest.matchers.should.Matchers
 final class PersonTest extends AnyFunSuite with Matchers:
   test("validate"):
     val validPerson = Person.validate("fred", 24)
-    validPerson.isValid shouldBe true
+    validPerson.isRight shouldBe true
 
     val invalidPerson = Person.validate("fred", 0)
-    invalidPerson.isValid shouldBe false
+    invalidPerson.isLeft shouldBe true
 
-    val person = validPerson.entity
+    val person = validPerson.right.get
     val personJson = writeToString[Person](person)
     person shouldBe readFromString[Person](personJson)
