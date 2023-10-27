@@ -1,3 +1,4 @@
 package objektwerks
 
-final class Validated[Validations, E](val validations: Validations, val entity: E)
+final class Validated[E](val validations: Validations, val entity: E):
+  def isValid: Boolean = validations.isValid
