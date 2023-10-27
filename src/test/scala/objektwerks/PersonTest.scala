@@ -10,3 +10,10 @@ final class PersonTest extends AnyFunSuite with Matchers:
 
     val invalidPerson = Person.validate("12", "fred", 24)
     invalidPerson.isLeft shouldBe true
+
+  test("validations"):
+    val validPerson = Person.validations("1", "fred", 24)
+    validPerson.isEmpty shouldBe true
+
+    val invalidPerson = Person.validations("12", "fred", 24)
+    invalidPerson.nonEmpty shouldBe true
