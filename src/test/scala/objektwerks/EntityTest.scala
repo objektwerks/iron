@@ -37,18 +37,19 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val poolJson = writeToString[Pool](validPool)
     validPool shouldBe readFromString[Pool](poolJson)
 
-    val cleaning = Cleaning(id = 1,
-                            poolId = validPool.id.refine,
-                            brush = true,
-                            net = true,
-                            skimmerBasket = true,
-                            pumpBasket = true,
-                            pumpFilter = true,
-                            vacuum = true,
-                            cleaned = Instant.now.getEpochSecond.refine) // Refactor!
+    val cleaning = Cleaning.validate(id = 1,
+                                     poolId = validPool.id,
+                                     brush = true,
+                                     net = true,
+                                     skimmerBasket = true,
+                                     pumpBasket = true,
+                                     pumpFilter = true,
+                                     vacuum = true,
+                                     cleaned = Instant.now.getEpochSecond)
 
-    val cleaningJson = writeToString[Cleaning](cleaning)
-    cleaning shouldBe readFromString[Cleaning](cleaningJson)
+    val validCleaning = cleaning.right.get
+    val cleaningJson = writeToString[Cleaning](validCleaning)
+    validCleaning shouldBe readFromString[Cleaning](cleaningJson)
 
     val measurement = Measurement(id = 1,
                                   poolId = validPool.id.refine,
