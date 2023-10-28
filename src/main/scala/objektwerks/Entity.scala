@@ -168,8 +168,7 @@ object Chemical:
       amount <- amount.refineEither[Greater[0.0]].left.map(error => invalidations.add("amount", error))
       added  <- added.refineEither[Greater[0]].left.map(error => invalidations.add("added", error))
     yield Chemical(id, poolId, typeof, amount, unit, added)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
