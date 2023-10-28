@@ -64,8 +64,7 @@ object Pool:
       built     <- built.refineEither[Greater[0]].left.map(error => invalidations.add("built", error))
       volume    <- volume.refineEither[GreaterEqual[100]].left.map(error => invalidations.add("volume", error))
     yield Pool(id, accountId, name, built, volume, unit)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
 
 final case class Cleaning private (id: Long,
                                    poolId: Long,
