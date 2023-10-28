@@ -13,7 +13,6 @@ sealed trait Entity:
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
-  given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
 final case class Account private (id: Long,
@@ -102,22 +101,55 @@ object Cleaning:
     if invalidations.isEmpty && either.isRight then Right(either.right.get)
     else Left(invalidations)
 
-final case class Measurement(id: Long :| GreaterEqual[0],
-                             poolId: Long :| Greater[0],
-                             totalChlorine: Int :| Interval.Closed[1, 5],
-                             freeChlorine: Int :| Interval.Closed[1, 5],
-                             combinedChlorine: Double :| Interval.Closed[0.0, 0.5],
-                             ph: Double :| Interval.Closed[6.2, 8.4],
-                             calciumHardness: Int :| Interval.Closed[250, 500],
-                             totalAlkalinity: Int :| Interval.Closed[80, 120],
-                             cyanuricAcid: Int :| Interval.Closed[30, 100],
-                             totalBromine: Int :| Interval.Closed[2, 10],
-                             salt: Int :| Interval.Closed[2700, 3400],
-                             temperature: Int :| Interval.Closed[50, 100],
-                             measured: Long :| Greater[0]) extends Entity // Make private!
+final case class Measurement private (id: Long,
+                                      poolId: Long,
+                                      totalChlorine: Int,
+                                      freeChlorine: Int,
+                                      combinedChlorine: Double,
+                                      ph: Double,
+                                      calciumHardness: Int,
+                                      totalAlkalinity: Int,
+                                      cyanuricAcid: Int,
+                                      totalBromine: Int,
+                                      salt: Int,
+                                      temperature: Int,
+                                      measured: Long) extends Entity
 
 object Measurement:
-  def validate(): Either[Invalidations, Measurement] = ??? // Build!
+  given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
+
+  def validate(id: Long,
+               poolId: Long,
+               totalChlorine: Int,
+               freeChlorine: Int,
+               combinedChlorine: Double,
+               ph: Double,
+               calciumHardness: Int,
+               totalAlkalinity: Int,
+               cyanuricAcid: Int,
+               totalBromine: Int,
+               salt: Int,
+               temperature: Int,
+               measured: Long): Either[Invalidations, Measurement] =
+    val invalidations = Invalidations()
+    val either = for
+      id                <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      poolId            <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("poolId", error))
+      totalChlorine     <- totalChlorine.refineEither[Interval.Closed[1, 5]].left.map(error => invalidations.add("totalChlorine", error))
+      freeChlorine      <- freeChlorine.refineEither[Interval.Closed[1, 5]].left.map(error => invalidations.add("freeChlorine", error))
+      combinedChlorine  <- combinedChlorine.refineEither[Interval.Closed[0.0, 0.5]].left.map(error => invalidations.add("combinedChlorine", error))
+      ph                <- ph.refineEither[Interval.Closed[6.2, 8.4]].left.map(error => invalidations.add("ph", error))
+      calciumHardness   <- calciumHardness.refineEither[Interval.Closed[250, 500]].left.map(error => invalidations.add("calciumHardness", error))
+      totalAlkalinity   <- totalAlkalinity.refineEither[Interval.Closed[80, 120]].left.map(error => invalidations.add("totalAlkalinity", error))
+      cyanuricAcid      <- cyanuricAcid.refineEither[Interval.Closed[30, 100]].left.map(error => invalidations.add("cyanuricAcid", error))
+      totalBromine      <- totalBromine.refineEither[Interval.Closed[2, 10]].left.map(error => invalidations.add("totalBromine", error))
+      salt              <- salt.refineEither[Interval.Closed[2700, 3400]].left.map(error => invalidations.add("salt", error))
+      temperature       <- temperature.refineEither[Interval.Closed[50, 100]].left.map(error => invalidations.add("temperature", error))
+
+      measured <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("measured", error))
+    yield Measurement(id, poolId, totalChlorine, freeChlorine, combinedChlorine, ph, calciumHardness, totalAlkalinity, cyanuricAcid, totalBromine, salt, temperature, measured)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
 
 final case class Chemical(id: Long :| GreaterEqual[0],
                           poolId: Long :| Greater[0],
