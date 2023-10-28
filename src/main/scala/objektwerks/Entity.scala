@@ -143,8 +143,7 @@ object Measurement:
 
       measured <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("measured", error))
     yield Measurement(id, poolId, totalChlorine, freeChlorine, combinedChlorine, ph, calciumHardness, totalAlkalinity, cyanuricAcid, totalBromine, salt, temperature, measured)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
 
 final case class Chemical(id: Long,
                           poolId: Long,
