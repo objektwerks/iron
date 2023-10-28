@@ -18,5 +18,4 @@ object Person:
       n <- name.refineEither[MinLength[2]].left.map(error => invalidations.add("name", error))
       a <- age.refineEither[Greater[0]].left.map(error => invalidations.add("age", error))
     yield Person(n, a)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
