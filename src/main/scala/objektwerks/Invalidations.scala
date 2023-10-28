@@ -10,7 +10,7 @@ final class Invalidations:
 
   def isEmpty: Boolean = invalidFields.isEmpty
 
-  def toEither[E](either: Either[Nothing, E]): Either[Invalidations, E] =
+  def toEither[E](either: Either[Unit, E]): Either[Invalidations, E] =
     if this.isEmpty && either.isRight then Right(either.right.get)
     else Left(this)
 

@@ -38,8 +38,7 @@ object Account:
       activated    <- activated.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("activated", error))
       deactivated  <- deactivated.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("deactivated", error))
     yield Account(id, license, emailAddress, pin, activated, deactivated)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
 
 final case class Pool private (id: Long,
                                accountId: Long,
