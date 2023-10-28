@@ -94,8 +94,7 @@ object Cleaning:
       poolId  <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("poolId", error))
       cleaned <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("cleaned", error))
     yield Cleaning(id, poolId, brush, net, skimmerBasket, pumpBasket, pumpFilter, vacuum, cleaned)
-    if invalidations.isEmpty && either.isRight then Right(either.right.get)
-    else Left(invalidations)
+    invalidations.toEither(either)
 
 final case class Measurement private (id: Long,
                                       poolId: Long,
