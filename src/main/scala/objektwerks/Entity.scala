@@ -4,7 +4,6 @@ import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import io.github.iltotore.iron.*
-import io.github.iltotore.iron.jsoniter.given
 import io.github.iltotore.iron.constraint.collection.{FixedLength, MinLength}
 import io.github.iltotore.iron.constraint.numeric.{Greater, GreaterEqual, Interval}
 
@@ -13,7 +12,6 @@ sealed trait Entity:
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
-  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
 final case class Account private (id: Long,
                                   license: String,
@@ -151,15 +149,31 @@ object Measurement:
     if invalidations.isEmpty && either.isRight then Right(either.right.get)
     else Left(invalidations)
 
-final case class Chemical(id: Long :| GreaterEqual[0],
-                          poolId: Long :| Greater[0],
+final case class Chemical(id: Long,
+                          poolId: Long,
                           typeof: TypeOfChemical,
-                          amount: Double :| Greater[0.0],
+                          amount: Double,
                           unit: UnitOfMeasure,
-                          added: Long :| Greater[0]) extends Entity // Make private!
+                          added: Long) extends Entity
 
 object Chemical:
-  def validate(): Either[Invalidations, Chemical] = ??? // Build!
+  given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
+
+  def validate(id: Long,
+               poolId: Long,
+               typeof: TypeOfChemical,
+               amount: Double,
+               unit: UnitOfMeasure,
+               added: Long): Either[Invalidations, Chemical] =
+    val invalidations = Invalidations()
+    val either = for
+      id     <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      poolId <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("poolId", error))
+      amount <- amount.refineEither[Greater[0.0]].left.map(error => invalidations.add("amount", error))
+      added  <- added.refineEither[Greater[0]].left.map(error => invalidations.add("added", error))
+    yield Chemical(id, poolId, typeof, amount, unit, added)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
 
 enum UnitOfMeasure:
   case gl, l, lb, kg, tablet
