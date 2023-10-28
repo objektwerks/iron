@@ -51,22 +51,23 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val cleaningJson = writeToString[Cleaning](validCleaning)
     validCleaning shouldBe readFromString[Cleaning](cleaningJson)
 
-    val measurement = Measurement(id = 1,
-                                  poolId = validPool.id.refine,
-                                  totalChlorine = 3,
-                                  freeChlorine = 3,
-                                  combinedChlorine = 0.3,
-                                  ph = 7.4,
-                                  calciumHardness = 300,
-                                  totalAlkalinity = 100,
-                                  cyanuricAcid = 65,
-                                  totalBromine = 6,
-                                  salt = 3100,
-                                  temperature = 80,
-                                  measured = Instant.now.getEpochSecond.refine) // Refactor!
+    val measurement = Measurement.validate(id = 1,
+                                           poolId = validPool.id,
+                                           totalChlorine = 3,
+                                           freeChlorine = 3,
+                                           combinedChlorine = 0.3,
+                                           ph = 7.4,
+                                           calciumHardness = 300,
+                                           totalAlkalinity = 100,
+                                           cyanuricAcid = 65,
+                                           totalBromine = 6,
+                                           salt = 3100,
+                                           temperature = 80,
+                                           measured = Instant.now.getEpochSecond)
 
-    val measurementJson = writeToString[Measurement](measurement)
-    measurement shouldBe readFromString[Measurement](measurementJson)
+    val validMeasurement = measurement.right.get
+    val measurementJson = writeToString[Measurement](validMeasurement)
+    validMeasurement shouldBe readFromString[Measurement](measurementJson)
 
     val chemical = Chemical(id = 1,
                             poolId = validPool.id.refine,
