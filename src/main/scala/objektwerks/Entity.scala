@@ -13,7 +13,6 @@ sealed trait Entity:
 
 object Entity:
   given JsonValueCodec[Entity] = JsonCodecMaker.make[Entity]
-  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]
   given JsonValueCodec[Measurement] = JsonCodecMaker.make[Measurement]
   given JsonValueCodec[Chemical] = JsonCodecMaker.make[Chemical]
 
@@ -64,7 +63,7 @@ object Pool:
     val invalidations = Invalidations()
     val either = for
       id        <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
-      accountId <- accountId.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("accountId", error))
+      accountId <- accountId.refineEither[Greater[0]].left.map(error => invalidations.add("accountId", error))
       name      <- name.refineEither[MinLength[3]].left.map(error => invalidations.add("name", error))
       built     <- built.refineEither[Greater[0]].left.map(error => invalidations.add("built", error))
       volume    <- volume.refineEither[GreaterEqual[100]].left.map(error => invalidations.add("volume", error))
@@ -72,18 +71,36 @@ object Pool:
     if invalidations.isEmpty && either.isRight then Right(either.right.get)
     else Left(invalidations)
 
-final case class Cleaning(id: Long :| GreaterEqual[0],
-                          poolId: Long :| Greater[0],
-                          brush: Boolean,
-                          net: Boolean,
-                          skimmerBasket: Boolean,
-                          pumpBasket: Boolean,
-                          pumpFilter: Boolean,
-                          vacuum: Boolean,
-                          cleaned: Long :| Greater[0]) extends Entity // Make private!
+final case class Cleaning private (id: Long,
+                                   poolId: Long,
+                                   brush: Boolean,
+                                   net: Boolean,
+                                   skimmerBasket: Boolean,
+                                   pumpBasket: Boolean,
+                                   pumpFilter: Boolean,
+                                   vacuum: Boolean,
+                                   cleaned: Long) extends Entity
 
 object Cleaning:
-  def validate(): Either[Invalidations, Cleaning] = ??? // Build!
+  given JsonValueCodec[Cleaning] = JsonCodecMaker.make[Cleaning]
+
+  def validate(id: Long,
+               poolId: Long,
+               brush: Boolean,
+               net: Boolean,
+               skimmerBasket: Boolean,
+               pumpBasket: Boolean,
+               pumpFilter: Boolean,
+               vacuum: Boolean,
+               cleaned: Long): Either[Invalidations, Cleaning] =
+    val invalidations = Invalidations()
+    val either = for
+      id      <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
+      poolId  <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("poolId", error))
+      cleaned <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("cleaned", error))
+    yield Cleaning(id, poolId, brush, net, skimmerBasket, pumpBasket, pumpFilter, vacuum, cleaned)
+    if invalidations.isEmpty && either.isRight then Right(either.right.get)
+    else Left(invalidations)
 
 final case class Measurement(id: Long :| GreaterEqual[0],
                              poolId: Long :| Greater[0],
