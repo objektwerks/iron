@@ -8,14 +8,14 @@ final class Invalidations:
 
   private val invalidFields = mutable.Map[Field, Message]()
 
+  def add(field: Field, message: Message): Unit = invalidFields += field -> message
+
+  def get(field: Field): Option[Message] = invalidFields.get(field)
+
   def isEmpty: Boolean = invalidFields.isEmpty
 
   def toEither[E](either: Either[Unit, E]): Either[Invalidations, E] =
     if this.isEmpty && either.isRight then Right(either.right.get)
     else Left(this)
-
-  def add(field: Field, message: Message): Unit = invalidFields += field -> message
-
-  def get(field: Field): Option[Message] = invalidFields.get(field)
 
   def toMap: Map[Field, Message] = invalidFields.toMap
