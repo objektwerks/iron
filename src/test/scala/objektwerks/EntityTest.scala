@@ -2,15 +2,11 @@ package objektwerks
 
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 
-import io.github.iltotore.iron.*
-
 import java.time.Instant
 import java.util.UUID
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
-
-import Entity.given
 
 final class EntityTest extends AnyFunSuite with Matchers:
   test("validate"):
@@ -69,12 +65,13 @@ final class EntityTest extends AnyFunSuite with Matchers:
     val measurementJson = writeToString[Measurement](validMeasurement)
     validMeasurement shouldBe readFromString[Measurement](measurementJson)
 
-    val chemical = Chemical(id = 1,
-                            poolId = validPool.id.refine,
-                            typeof = TypeOfChemical.LiquidChlorine,
-                            amount = 2.5,
-                            unit = UnitOfMeasure.gl,
-                            added = Instant.now.getEpochSecond.refine) // Refactor!
+    val chemical = Chemical.validate(id = 1,
+                                     poolId = validPool.id,
+                                     typeof = TypeOfChemical.LiquidChlorine,
+                                     amount = 2.5,
+                                     unit = UnitOfMeasure.gl,
+                                     added = Instant.now.getEpochSecond)
 
-    val chemicalJson = writeToString[Chemical](chemical)
-    chemical shouldBe readFromString[Chemical](chemicalJson)
+    val validChemical = chemical.right.get
+    val chemicalJson = writeToString[Chemical](validChemical)
+    validChemical shouldBe readFromString[Chemical](chemicalJson)
