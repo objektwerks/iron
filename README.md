@@ -12,5 +12,5 @@ Test
 
 Resources
 ---------
-1. [Iron](https://www.javadoc.io/doc/io.github.iltotore/iron-docs_3/latest/docs/index.html)
-2. [Typesafety with Iron](https://blog.michal.pawlik.dev/posts/scala/iron/)
+* [Iron](https://www.javadoc.io/doc/io.github.iltotore/iron-docs_3/latest/docs/index.html)
+* [Typesafety with Iron](https://blog.michal.pawlik.dev/posts/scala/iron/)
