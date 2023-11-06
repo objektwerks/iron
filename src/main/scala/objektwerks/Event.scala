@@ -15,7 +15,9 @@ final case class ChemicalAdded(pool: Either[Invalidations, Chemical]) extends Ev
 
 object Event:
   given JsonValueCodec[Event] = JsonCodecMaker.make[Event]
+
   given JsonValueCodec[PersonAdded] = JsonCodecMaker.make[PersonAdded]
+  
   given JsonValueCodec[PoolAdded] = JsonCodecMaker.make[PoolAdded]
   given JsonValueCodec[CleaningAdded] = JsonCodecMaker.make[CleaningAdded]
   given JsonValueCodec[MeasurementAdded] = JsonCodecMaker.make[MeasurementAdded]
