@@ -16,6 +16,7 @@ final class EventTest extends AnyFunSuite with Matchers:
     val personAdded = PersonAdded(person)
     val personAddedJson = writeToString[PersonAdded](personAdded)
     personAdded shouldBe readFromString[PersonAdded](personAddedJson)
+    println(personAddedJson)
 
     val account = Account.validate(id = 1,
                                    license = UUID.randomUUID.toString,
@@ -26,8 +27,9 @@ final class EventTest extends AnyFunSuite with Matchers:
     val accountId = account.right.get.id
 
     val accountAdded = AccountAdded(account)
-    val accountAddJson = writeToString[AccountAdded](accountAdded)
-    accountAdded shouldBe readFromString[AccountAdded](accountAddJson)
+    val accountAddedJson = writeToString[AccountAdded](accountAdded)
+    accountAdded shouldBe readFromString[AccountAdded](accountAddedJson)
+    println(accountAddedJson)
 
     val pool = Pool.validate(id = 1,
                              accountId = accountId,
