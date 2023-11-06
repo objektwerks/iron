@@ -42,6 +42,7 @@ final class EventTest extends AnyFunSuite with Matchers:
     val poolAdded = PoolAdded(pool)
     val poolAddedJson = writeToString[PoolAdded](poolAdded)
     poolAdded shouldBe readFromString[PoolAdded](poolAddedJson)
+    println(poolAddedJson)
 
     val cleaning = Cleaning.validate(id = 1,
                                      poolId = poolId,
