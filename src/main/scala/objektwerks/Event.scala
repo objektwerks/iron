@@ -18,4 +18,5 @@ object Event:
   given JsonValueCodec[PersonAdded] = JsonCodecMaker.make[PersonAdded]
   given JsonValueCodec[PoolAdded] = JsonCodecMaker.make[PoolAdded]
   given JsonValueCodec[CleaningAdded] = JsonCodecMaker.make[CleaningAdded]
+  given JsonValueCodec[MeasurementAdded] = JsonCodecMaker.make[MeasurementAdded]
   given JsonValueCodec[ChemicalAdded] = JsonCodecMaker.make[ChemicalAdded]
