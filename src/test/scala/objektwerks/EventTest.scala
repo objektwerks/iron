@@ -21,8 +21,8 @@ final class EventTest extends AnyFunSuite with Matchers:
     val invalidPerson = Person.validate("fred", 0)
     val invalidPersonAdded = PersonAdded(invalidPerson)
     val invalidPersonAddedJson = writeToString[PersonAdded](invalidPersonAdded)
-    invalidPersonAdded shouldBe readFromString[PersonAdded](invalidPersonAddedJson)
     println(invalidPersonAddedJson)
+    invalidPersonAdded shouldBe readFromString[PersonAdded](invalidPersonAddedJson)
 
     val account = Account.validate(id = 1,
                                    license = UUID.randomUUID.toString,

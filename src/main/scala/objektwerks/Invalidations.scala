@@ -5,23 +5,21 @@ import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
 import scala.collection.mutable
 
-final class Invalidations:
-  type Field = String
-  type Message = String
+type Field = String
+type Message = String
 
-  private val invalidFields = mutable.Map[Field, Message]()
+final case class Invalidations(fields: mutable.Map[Field, Message] = mutable.Map[Field, Message]()):
+  def add(field: Field, message: Message): Unit = fields += field -> message
 
-  def add(field: Field, message: Message): Unit = invalidFields += field -> message
+  def get(field: Field): Option[Message] = fields.get(field)
 
-  def get(field: Field): Option[Message] = invalidFields.get(field)
-
-  def isEmpty: Boolean = invalidFields.isEmpty
+  def isEmpty: Boolean = fields.isEmpty
 
   def toEither[E](either: Either[Unit, E]): Either[Invalidations, E] =
     if this.isEmpty && either.isRight then Right(either.right.get)
     else Left(this)
 
-  def toMap: Map[Field, Message] = invalidFields.toMap
+  def toMap: Map[Field, Message] = fields.toMap
 
 object Invalidations:
   given JsonValueCodec[Invalidations] = JsonCodecMaker.make[Invalidations]
