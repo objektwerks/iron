@@ -9,9 +9,9 @@ final case class PersonAdded(person: Either[Invalidations, Person]) extends Even
 
 final case class AccountAdded(account: Either[Invalidations, Account]) extends Event
 final case class PoolAdded(pool: Either[Invalidations, Pool]) extends Event
-final case class CleaningAdded(pool: Either[Invalidations, Cleaning]) extends Event
-final case class MeasurementAdded(pool: Either[Invalidations, Measurement]) extends Event
-final case class ChemicalAdded(pool: Either[Invalidations, Chemical]) extends Event
+final case class CleaningAdded(cleaning: Either[Invalidations, Cleaning]) extends Event
+final case class MeasurementAdded(measurement: Either[Invalidations, Measurement]) extends Event
+final case class ChemicalAdded(chemical: Either[Invalidations, Chemical]) extends Event
 
 object Event:
   given JsonValueCodec[Event] = JsonCodecMaker.make[Event]
