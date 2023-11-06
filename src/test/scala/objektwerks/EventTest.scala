@@ -46,9 +46,9 @@ final class EventTest extends AnyFunSuite with Matchers:
                                      vacuum = true,
                                      cleaned = Instant.now.getEpochSecond)
 
-    val validCleaning = cleaning.right.get
-    val cleaningJson = writeToString[Cleaning](validCleaning)
-    validCleaning shouldBe readFromString[Cleaning](cleaningJson)
+    val cleaningAdded = CleaningAdded(cleaning)
+    val cleaningAddedJson = writeToString[CleaningAdded](cleaningAdded)
+    cleaningAdded shouldBe readFromString[CleaningAdded](cleaningAddedJson)
 
     val measurement = Measurement.validate(id = 1,
                                            poolId = poolId,
