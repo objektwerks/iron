@@ -64,9 +64,9 @@ final class EventTest extends AnyFunSuite with Matchers:
                                            temperature = 80,
                                            measured = Instant.now.getEpochSecond)
 
-    val validMeasurement = measurement.right.get
-    val measurementJson = writeToString[Measurement](validMeasurement)
-    validMeasurement shouldBe readFromString[Measurement](measurementJson)
+    val measurementAdded = MeasurementAdded(measurement)
+    val measurementAddedJson = writeToString[MeasurementAdded](measurementAdded)
+    measurementAdded shouldBe readFromString[MeasurementAdded](measurementAddedJson)
 
     val chemical = Chemical.validate(id = 1,
                                      poolId = poolId,
