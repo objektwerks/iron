@@ -57,6 +57,7 @@ final class EventTest extends AnyFunSuite with Matchers:
     val cleaningAdded = CleaningAdded(cleaning)
     val cleaningAddedJson = writeToString[CleaningAdded](cleaningAdded)
     cleaningAdded shouldBe readFromString[CleaningAdded](cleaningAddedJson)
+    println(cleaningAddedJson)
 
     val measurement = Measurement.validate(id = 1,
                                            poolId = poolId,
