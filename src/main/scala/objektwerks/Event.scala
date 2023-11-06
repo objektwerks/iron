@@ -7,5 +7,10 @@ sealed trait Event
 
 final case class PersonAdded(person: Either[Invalidations, Person]) extends Event
 
+final case class AccountAdded(account: Either[Invalidations, Account]) extends Event
+final case class PoolAdded(pool: Either[Invalidations, Pool]) extends Event
+
 object Event:
+  given JsonValueCodec[Event] = JsonCodecMaker.make[Event]
   given JsonValueCodec[PersonAdded] = JsonCodecMaker.make[PersonAdded]
+  given JsonValueCodec[PoolAdded] = JsonCodecMaker.make[PoolAdded]
