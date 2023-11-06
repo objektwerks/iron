@@ -1,5 +1,8 @@
 package objektwerks
 
+import com.github.plokhotnyuk.jsoniter_scala.core.*
+import com.github.plokhotnyuk.jsoniter_scala.macros.*
+
 import scala.collection.mutable
 
 final class Invalidations:
@@ -19,3 +22,6 @@ final class Invalidations:
     else Left(this)
 
   def toMap: Map[Field, Message] = invalidFields.toMap
+
+object Invalidations:
+  given JsonValueCodec[Invalidations] = JsonCodecMaker.make[Invalidations]

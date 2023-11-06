@@ -12,11 +12,17 @@ import org.scalatest.matchers.should.Matchers
 
 final class EventTest extends AnyFunSuite with Matchers:
   test("event"):
-    val person = Person.validate("fred", 24)
-    val personAdded = PersonAdded(person)
-    val personAddedJson = writeToString[PersonAdded](personAdded)
-    personAdded shouldBe readFromString[PersonAdded](personAddedJson)
-    println(personAddedJson)
+    val validPerson = Person.validate("fred", 24)
+    val validPersonAdded = PersonAdded(validPerson)
+    val validPersonAddedJson = writeToString[PersonAdded](validPersonAdded)
+    validPersonAdded shouldBe readFromString[PersonAdded](validPersonAddedJson)
+    println(validPersonAddedJson)
+
+    val invalidPerson = Person.validate("fred", 0)
+    val invalidPersonAdded = PersonAdded(invalidPerson)
+    val invalidPersonAddedJson = writeToString[PersonAdded](invalidPersonAdded)
+    invalidPersonAdded shouldBe readFromString[PersonAdded](invalidPersonAddedJson)
+    println(invalidPersonAddedJson)
 
     val account = Account.validate(id = 1,
                                    license = UUID.randomUUID.toString,
