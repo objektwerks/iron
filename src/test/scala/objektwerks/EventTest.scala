@@ -75,6 +75,6 @@ final class EventTest extends AnyFunSuite with Matchers:
                                      unit = UnitOfMeasure.gl,
                                      added = Instant.now.getEpochSecond)
 
-    val validChemical = chemical.right.get
-    val chemicalJson = writeToString[Chemical](validChemical)
-    validChemical shouldBe readFromString[Chemical](chemicalJson)
+    val chemicalAdded = ChemicalAdded(chemical)
+    val chemicalAddedJson = writeToString[ChemicalAdded](chemicalAdded)
+    chemicalAdded shouldBe readFromString[ChemicalAdded](chemicalAddedJson)
