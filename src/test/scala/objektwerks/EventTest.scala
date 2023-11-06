@@ -88,3 +88,4 @@ final class EventTest extends AnyFunSuite with Matchers:
     val chemicalAdded = ChemicalAdded(chemical)
     val chemicalAddedJson = writeToString[ChemicalAdded](chemicalAdded)
     chemicalAdded shouldBe readFromString[ChemicalAdded](chemicalAddedJson)
+    println(chemicalAddedJson)
