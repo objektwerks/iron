@@ -22,7 +22,7 @@ final class EventTest extends AnyFunSuite with Matchers:
 
     val accountAdded = AccountAdded(account)
     val accountAddJson = writeToString[AccountAdded](accountAdded)
-    accountAdded shouldBe readFromString[Account](accountAddJson)
+    accountAdded shouldBe readFromString[AccountAdded](accountAddJson)
 
     val pool = Pool.validate(id = 1,
                              accountId = accountId,
@@ -30,13 +30,14 @@ final class EventTest extends AnyFunSuite with Matchers:
                              built = 2022,
                              volume = 10000,
                              unit = UnitOfMeasure.gl)
+    val poolId = pool.right.get.id
 
-    val validPool = pool.right.get
-    val poolJson = writeToString[Pool](validPool)
-    validPool shouldBe readFromString[Pool](poolJson)
+    val poolAdded = PoolAdded(pool)
+    val poolAddedJson = writeToString[PoolAdded](poolAdded)
+    poolAdded shouldBe readFromString[PoolAdded](poolAddedJson)
 
     val cleaning = Cleaning.validate(id = 1,
-                                     poolId = validPool.id,
+                                     poolId = poolId,
                                      brush = true,
                                      net = true,
                                      skimmerBasket = true,
@@ -50,7 +51,7 @@ final class EventTest extends AnyFunSuite with Matchers:
     validCleaning shouldBe readFromString[Cleaning](cleaningJson)
 
     val measurement = Measurement.validate(id = 1,
-                                           poolId = validPool.id,
+                                           poolId = poolId,
                                            totalChlorine = 3,
                                            freeChlorine = 3,
                                            combinedChlorine = 0.3,
@@ -68,7 +69,7 @@ final class EventTest extends AnyFunSuite with Matchers:
     validMeasurement shouldBe readFromString[Measurement](measurementJson)
 
     val chemical = Chemical.validate(id = 1,
-                                     poolId = validPool.id,
+                                     poolId = poolId,
                                      typeof = TypeOfChemical.LiquidChlorine,
                                      amount = 2.5,
                                      unit = UnitOfMeasure.gl,
