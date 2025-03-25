@@ -92,7 +92,7 @@ object Cleaning:
     val either = for
       id      <- id.refineEither[GreaterEqual[0]].left.map(error => invalidations.add("id", error))
       poolId  <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("poolId", error))
-      cleaned <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("cleaned", error))
+      cleaned <- cleaned.refineEither[Greater[0]].left.map(error => invalidations.add("cleaned", error))
     yield Cleaning(id, poolId, brush, net, skimmerBasket, pumpBasket, pumpFilter, vacuum, cleaned)
     invalidations.toEither(either)
 
