@@ -140,8 +140,7 @@ object Measurement:
       totalBromine      <- totalBromine.refineEither[Interval.Closed[2, 10]].left.map(error => invalidations.add("totalBromine", error))
       salt              <- salt.refineEither[Interval.Closed[2700, 3400]].left.map(error => invalidations.add("salt", error))
       temperature       <- temperature.refineEither[Interval.Closed[50, 100]].left.map(error => invalidations.add("temperature", error))
-
-      measured <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("measured", error))
+      measured          <- poolId.refineEither[Greater[0]].left.map(error => invalidations.add("measured", error))
     yield Measurement(id, poolId, totalChlorine, freeChlorine, combinedChlorine, ph, calciumHardness, totalAlkalinity, cyanuricAcid, totalBromine, salt, temperature, measured)
     invalidations.toEither(either)
 
