@@ -3,7 +3,7 @@ version := "0.1-SNAPSHOT"
 scalaVersion := "3.8.4-RC2"
 organization := "objektwerks"
 libraryDependencies ++= {
-  val ironVersion = "3.3.0"
+  val ironVersion = "3.3.1"
   val jsoniterVersion = "2.38.9"
   Seq(
     "io.github.iltotore" %% "iron" % ironVersion,
